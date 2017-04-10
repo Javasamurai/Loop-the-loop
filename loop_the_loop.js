@@ -187,8 +187,12 @@ function check_valid_new(squares, weights) {
                     first_col = col_current;
                 }
                 /////////////////////////////
+
                 if (!choose_movement(cell_value, weights)) {
                     return false;
+                }
+                else {
+                    check_valid_new(squares, weights);
                 }
             }
             else {
@@ -196,10 +200,16 @@ function check_valid_new(squares, weights) {
                     if (!choose_movement(cell_value.split("")[1], weights)) {
                         return false;
                     }
+                    else {
+                        check_valid_new(squares, weights);
+                    }
                 }
                 else if (cell_value.split("")[1] == last_value) {
                     if (!choose_movement(cell_value.split("")[0]), weights) {
                         return false;
+                    }
+                    else {
+                        check_valid_new(squares, weights);
                     }
                 }
             }
