@@ -20,6 +20,19 @@ var first_row;
 var first_col;
 var square_sum;
 var current_weight = [];
+
+//A sample input weight and solution weights
+//Similiar to puzzal taken from below link
+//http://apps.hashcube.com/f8loop/static/images/solved.png
+var input = [[['r', 'd', 'ud', 'n'], ['d', 'd', 'u', 'r'], ['dr', 'dl', 'lu', 'ur'], ['ld', 'r', 'd', 'l'], ['dr', 'dl', 'ul', 'u']],
+    [['d', 'u', 'ur', 'ur'], ['ur', 'ul', 'lr', 'd'], ['lu', 'ru', 'ld', 'rd'], ['l', 'ulS', 'u', 'n'], ['r', 'd', 'u', 'n']],
+    [['r', 'd', 'u', 'n'], ['d', 'd', 'r', 'u'], ['r', 'd', 'u', 'n'], ['r', 'd', 'u', 'n'], ['r', 'd', 'u', 'n']],
+    [['r', 'd', 'u', 'n'], ['d', 'd', 'r', 'u'], ['r', 'd', 'u', 'n'], ['r', 'd', 'u', 'n'], ['r', 'd', 'u', 'n']],
+    [['r', 'd', 'u', 'n'], ['d', 'd', 'r', 'u'], ['r', 'd', 'u', 'n'], ['r', 'd', 'u', 'n'], ['r', 'd', 'u', 'n']]];
+
+var given_weights = [[3, 'n', 3, 3, 'n'], ['n', 'n', 0, 2, 2], ['n', 'n', 'n', 'n', '2'], ['n', 'n', 1, 'n', '2'], [2, 2, 2, 3, 3],]
+console.log(check_valid_new(input, given_weights));
+
 // var current_square = 0;
 
 // function move_to_pos(move_pos) {
@@ -93,16 +106,16 @@ function check_square(character, weigths) {
     else {
         valid = false;
     }
+    return valid;
 }
-return valid;
-}
-function choose_movement(characterm, weigths) {
+
+function choose_movement(character, weigths) {
     if (cell_value == 'l') {
-        column_current--;
+        col_current--;
         check_valid_new(squares, weights);
     }
     else if (cell_value == 'r') {
-        column_current++;
+        col_current++;
         check_valid_new(squares, weights);
 
     } else if (cell_value == 'u') {
@@ -119,8 +132,8 @@ function choose_movement(characterm, weigths) {
 
 function check_valid_new(squares, weights) {
     // var valid = false;
-    var cell_value = squares[row_current, column_current]
-    if (row_current == first_row && column_current == first_col) {
+    var cell_value = squares[row_current, col_current]
+    if (row_current == first_row && col_current == first_col) {
         /*The fortunate loop condition
          ///////////////////////////////
          ///////////////////////////////
@@ -141,8 +154,8 @@ function check_valid_new(squares, weights) {
                     row_current++;
                     check_valid_new(squares, weights);
                 }
-                else if (column_current < 6) {
-                    column_current++;
+                else if (col_current < 6) {
+                    col_current++;
                     check_valid_new(squares, weights);
                 }
                 else {
@@ -156,9 +169,9 @@ function check_valid_new(squares, weights) {
             else if (cell_value == 'l' || cell_value == 'r' || cell_value == 'u' || cell_value == 'd') {
                 /////////////////////////////
                 if (!found_first) {
-                    first_pos = current_pos[row_current][column_current];
+                    first_pos = current_pos[row_current][col_current];
                     first_row = row_current;
-                    first_col = column_current;
+                    first_col = col_current;
                 }
                 /////////////////////////////
                 if (!choose_movement(cell_value)) {
