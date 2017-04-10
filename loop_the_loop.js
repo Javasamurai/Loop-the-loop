@@ -13,10 +13,14 @@
 // var found_first = false;
 // var first_pos;
 // var total_weight = 0;
+
 var last_value = 'n';
 var row_current = col_current = 0;
 var first_row;
 var first_col;
+var square_sum;
+var current_weight = [];
+// var current_square = 0;
 
 // function move_to_pos(move_pos) {
 //     current_pos = move_pos;
@@ -75,8 +79,24 @@ function calculate_total_weights(weights) {
     for (var i = 0; i < weights.length; i++) {
         total_weight = total_weight + weights[i][j];
     }
+    return total_weight;
 }
-function choose_movement(character) {
+function check_square(character, weigths) {
+    var weight = weigths[row_current][col_current];
+    var valid = true;
+    //Increase the weights
+    current_weight = current_weight++;
+    //Check if the current weight is less than assigned weight and weight is not nothing
+    if (current_weight <= weight && weight != 'n') {
+        valid = true;
+    }
+    else {
+        valid = false;
+    }
+}
+return valid;
+}
+function choose_movement(characterm, weigths) {
     if (cell_value == 'l') {
         column_current--;
         check_valid_new(squares, weights);
@@ -93,9 +113,12 @@ function choose_movement(character) {
         row_current++;
         check_valid_new(squares, weights);
     }
+    //Check if the movement is valid according to the weight
+    return (check_square(character, weigths));
 }
+
 function check_valid_new(squares, weights) {
-    var valid = false;
+    // var valid = false;
     var cell_value = squares[row_current, column_current]
     if (row_current == first_row && column_current == first_col) {
         /*The fortunate loop condition
@@ -138,14 +161,20 @@ function check_valid_new(squares, weights) {
                     first_col = column_current;
                 }
                 /////////////////////////////
-                choose_movement(cell_value);
+                if (!choose_movement(cell_value)) {
+                    return false;
+                }
             }
             else {
                 if (cell_value.split("")[0] == last_value) {
-                    choose_movement(cell_value.split("")[1]);
+                    if (!choose_movement(cell_value.split("")[1])) {
+                        return false;
+                    }
                 }
                 else if (cell_value.split("")[1] == last_value) {
-                    choose_movement(cell_value.split("")[0]);
+                    if (!choose_movement(cell_value.split("")[0])) {
+                        return false;
+                    }
                 }
             }
         }
@@ -154,5 +183,4 @@ function check_valid_new(squares, weights) {
             return false;
         }
     }
-
 }
